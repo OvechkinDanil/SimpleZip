@@ -64,13 +64,10 @@ public class CompressionBlock {
         try(FileOutputStream fileOutputStream = new FileOutputStream(output, append))
         {
             fileOutputStream.write((byte)dictionary.size());
-            for (short elem: dictionary)
-            {
-                buf = shortToBytes(elem);
+            for (short elem: dictionary) {
                 fileOutputStream.write(shortToBytes(elem));
             }
             fileOutputStream.write((byte)compressedBuffer.size());
-
             for (byte elem: compressedBuffer)
             {
                 fileOutputStream.write(elem);

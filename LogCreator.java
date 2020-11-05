@@ -6,12 +6,14 @@ import java.util.logging.SimpleFormatter;
 public class LogCreator {
     public Logger logger;
     public LogItems logItems;
+    public static int numErrors;
 
     public enum LogItems
     {
         ERROR_OPEN_FILE("File cannot be opened"),
         ERROR_WITH_TOKEN_IN_CONFIG("Left token in config cannot be found in ConfigItems"),
         ERROR_DICTIONARY_INDEX("Cannot find element in dictionary"),
+        ERROR_CONFIG_ITEM("Problem with config item"),
         ERROR_INTEGER("Integer can't be parsed");
 
         private String title;
@@ -45,5 +47,6 @@ public class LogCreator {
     public void writeToLog(LogItems item)
     {
         logger.info(item.getTitle());
+        numErrors++;
     }
 }

@@ -12,9 +12,8 @@ public class ConfigParcer {
     {
         INPUT("input"),
         OUTPUT("output"),
-        DECOMPRESSED("decompressed"),
         LOGGER("logger"),
-        TYPE("type"),
+        ISCOMPRESSED("compress"),
         BUFSIZE("bufsize");
 
         private String title;

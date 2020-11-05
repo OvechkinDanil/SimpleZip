@@ -12,16 +12,8 @@ public class First
             System.err.println("No argument or it is null");
             return;
         }
-        File file = new File(argv[0]);
-        LogCreator log = new LogCreator(argv[1]);
+        Manager manager = new Manager(argv[0], argv[1]);
+        manager.run();
 
-        ConfigParcer cfg = new ConfigParcer(file, log);
-
-
-        CompressionBlock compressor = new CompressionBlock(cfg, log);
-        compressor.compress();
-
-        Decompression decompressor = new Decompression(cfg, log);
-        decompressor.deCompress();
     }
 }

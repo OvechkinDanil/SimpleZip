@@ -1,0 +1,9 @@
+INPUT=out.txt
+OUTPUT=dec.txt
+WRITER_NAME=writer.Worker
+WRITER_CONFIG=./configs/marin_cfg/writer_cfg.txt
+READER_NAME=ru.main.Reader
+READER_CONFIG=./configs/my_cfg/readerConfig.txt
+EXECUTORS_CONFIGS=./configs/my_cfg/compConfig.txt
+EXECUTORS_NAME=ru.main.Decompression
+ORDER=ru.main.Reader-ru.main.Decompression-writer.Worker

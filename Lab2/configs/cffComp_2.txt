@@ -1,0 +1,9 @@
+INPUT=in.txt
+OUTPUT=out.txt
+WRITER_NAME=ru.main.Writer
+WRITER_CONFIG=./configs/my_cfg/writerConfig.txt
+READER_NAME=reader.Worker
+READER_CONFIG=./configs/marin_cfg/reader_cfg.txt
+EXECUTORS_CONFIGS=./configs/my_cfg/compConfig.txt
+EXECUTORS_NAME=ru.main.Compression
+ORDER=reader.Worker-ru.main.Compression-ru.main.Writer

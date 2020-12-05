@@ -1,0 +1,9 @@
+INPUT=out.txt
+OUTPUT=dec.txt
+WRITER_NAME=ru.main.Writer
+WRITER_CONFIG=./configs/my_cfg/writerConfig.txt
+READER_NAME=ru.main.Reader
+READER_CONFIG=./configs/my_cfg/readerConfig.txt
+EXECUTORS_CONFIGS=./configs/my_cfg/compConfig.txt
+EXECUTORS_NAME=ru.main.Decompression
+ORDER=ru.main.Reader-ru.main.Decompression-ru.main.Writer

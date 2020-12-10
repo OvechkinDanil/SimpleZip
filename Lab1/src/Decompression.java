@@ -31,7 +31,7 @@ public class Decompression {
     {
         int dictSize = 0, bufSize = 0, i = 0;
         byte first, second;
-        try(FileOutputStream fileOutputStream = new FileOutputStream(output, true)) {
+        try(FileOutputStream fileOutputStream = new FileOutputStream(output)) {
             try (FileInputStream fileInputStream = new FileInputStream(compressedFile)) {
 
                 while ((dictSize = fileInputStream.read()) != -1) {

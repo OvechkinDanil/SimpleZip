@@ -1,4 +1,0 @@
-input:in.txt
-output:out.txt
-compress:1
-bufsize:600

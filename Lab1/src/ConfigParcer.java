@@ -1,13 +1,16 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConfigParcer {
     final String Separator = ":";
-    String line;
+    private String line;
+    Logger logger;
+
     public enum ConfigItems
     {
         INPUT("input"),
@@ -34,7 +37,7 @@ public class ConfigParcer {
         return dic.get(item);
     }
 
-    private void ParseLine(LogCreator log)
+    private boolean ParseLine()
     {
         String[] tokens = line.split(Separator);
         boolean isFind = false;
@@ -43,28 +46,26 @@ public class ConfigParcer {
             if (item.getTitle().equals(tokens[0]))
             {
                 dic.put(item, tokens[1]);
-                isFind = true;
-                break;
+                return true;
             }
         }
-        if (!isFind)
-        {
-            log.writeToLog(LogCreator.LogItems.ERROR_WITH_TOKEN_IN_CONFIG);
-        }
+        return false;
     }
 
-    ConfigParcer(File file, LogCreator log)
+    ConfigParcer(File file, Logger logger)
     {
+        this.logger = logger;
         try {
             Scanner sc = new Scanner(file);
             while (sc.hasNextLine()) {
                 line = sc.nextLine();
-                ParseLine(log);
+                if (!ParseLine())
+                    logger.log(Level.SEVERE, Log.LoggerItems.CODE_CONFIG_GRAMMAR_ERROR.getTitle());
             }
         }
         catch(FileNotFoundException e)
         {
-            log.writeToLog(LogCreator.LogItems.ERROR_OPEN_FILE);
+            logger.log(Level.SEVERE, Log.LoggerItems.CODE_FAILED_TO_READ.getTitle());
         }
     }
 }

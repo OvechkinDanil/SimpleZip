@@ -1,0 +1,4 @@
+input:out.txt
+output:dec.txt
+compress:0
+bufsize:400

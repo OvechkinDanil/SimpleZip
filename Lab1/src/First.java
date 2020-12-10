@@ -1,19 +1,19 @@
-import java.io.*;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class First
 {
-
     public static void main(String[] argv)
     {
-        if (argv.length == 0 || argv[0] == null)
+        Logger logger = Logger.getLogger("Lab1_log");
+        if (argv.length != 1 || argv[0] == null)
         {
-            System.err.println("No argument or it is null");
+            logger.log(Level.SEVERE, Log.LoggerItems.CODE_INVALID_ARGUMENT.getTitle());
             return;
         }
-        Manager manager = new Manager(argv[0], argv[1]);
-        manager.run();
 
+        Manager manager = new Manager(argv[0], logger);
+        manager.run();
     }
 }

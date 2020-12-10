@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CompressionBlock {
     private final String input;
@@ -14,21 +15,23 @@ public class CompressionBlock {
     private byte[] buffer;
     private ArrayList<Short> dictionary;
     private ArrayList<Byte> compressedBuffer;
-    LogCreator log;
+    private Logger logger;
 
-    CompressionBlock(ConfigParcer cfg, LogCreator l)
+    CompressionBlock(ConfigParcer cfg, Logger logger)
     {
-        log = l;
+        this.logger = logger;
         input = cfg.GetConfigItemInf(ConfigParcer.ConfigItems.INPUT);
         output = cfg.GetConfigItemInf(ConfigParcer.ConfigItems.OUTPUT);
+
         try
         {
             bufSize = Integer.parseInt(cfg.GetConfigItemInf(ConfigParcer.ConfigItems.BUFSIZE));
         }
         catch (NumberFormatException e)
         {
-            log.writeToLog(LogCreator.LogItems.ERROR_INTEGER);
+            logger.log(Level.SEVERE, Log.LoggerItems.CODE_CONFIG_SEMANTIC_ERROR.getTitle());
         }
+
         buffer = new byte[bufSize];
 
         dictionary = new ArrayList<>();
@@ -52,18 +55,17 @@ public class CompressionBlock {
             }
             catch (Exception e)
             {
-                log.writeToLog(LogCreator.LogItems.ERROR_OPEN_FILE);
+                logger.log(Level.SEVERE, Log.LoggerItems.CODE_INVALID_OUTPUT_STREAM.getTitle());
             }
         }
         catch (Exception e)
         {
-            log.writeToLog(LogCreator.LogItems.ERROR_OPEN_FILE);
+            logger.log(Level.SEVERE, Log.LoggerItems.CODE_INVALID_INPUT_STREAM.getTitle());
         }
     }
 
     private void OutputData(FileOutputStream fileOutputStream)
     {
-        byte[] buf;
         try
         {
             fileOutputStream.write((byte)dictionary.size());
@@ -76,7 +78,7 @@ public class CompressionBlock {
         }
         catch (IOException e)
         {
-            log.writeToLog(LogCreator.LogItems.ERROR_OPEN_FILE);
+            logger.log(Level.SEVERE, Log.LoggerItems.CODE_FAILED_TO_WRITE.getTitle());
         }
     }
 
@@ -109,10 +111,12 @@ public class CompressionBlock {
         {
             pairBytes = bytesToShort(buffer[i-1], buffer[i]);
             ind = (byte)dictionary.indexOf(pairBytes);
+
             if (ind == -1)
             {
-                log.writeToLog(LogCreator.LogItems.ERROR_DICTIONARY_INDEX);
+                logger.log(Level.SEVERE, Log.LoggerItems.CODE_PROBLEMS.getTitle());
             }
+
             compressedBuffer.add(ind);
         }
     }

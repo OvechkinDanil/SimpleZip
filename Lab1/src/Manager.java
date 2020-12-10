@@ -1,15 +1,16 @@
-import sun.rmi.runtime.Log;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import java.io.File;
 
 public class Manager {
-    private LogCreator log;
     private File file;
+    private Logger logger;
 
 
-    Manager(String cfgFile, String logFile) {
+    Manager(String cfgFile, Logger logger) {
         file = new File(cfgFile);
-        log = new LogCreator(logFile);
+        this.logger = logger;
     }
 
     private boolean IntToBool(ConfigParcer cfg)
@@ -23,14 +24,14 @@ public class Manager {
                 return false;
             else
             {
-                log.writeToLog(LogCreator.LogItems.ERROR_CONFIG_ITEM);
+                logger.log(Level.SEVERE, Log.LoggerItems.CODE_CONFIG_SEMANTIC_ERROR.getTitle());
                 return false;
              }
 
         }
         catch (NumberFormatException e)
         {
-            log.writeToLog(LogCreator.LogItems.ERROR_INTEGER);
+            logger.log(Level.SEVERE, Log.LoggerItems.CODE_CONFIG_SEMANTIC_ERROR.getTitle());
             return false;
         }
     }
@@ -38,20 +39,18 @@ public class Manager {
     public void run()
     {
 
-        ConfigParcer cfg = new ConfigParcer(file, log);
+        ConfigParcer cfg = new ConfigParcer(file, logger);
         boolean isCompressed = IntToBool(cfg);
 
-        if (LogCreator.numErrors != 0)
-            return;
 
         if (isCompressed)
         {
-            CompressionBlock compressor = new CompressionBlock(cfg, log);
+            CompressionBlock compressor = new CompressionBlock(cfg, logger);
             compressor.compress();
         }
         else if (!isCompressed)
         {
-            Decompression decompressor = new Decompression(cfg, log);
+            Decompression decompressor = new Decompression(cfg, logger);
             decompressor.deCompress();
         }
     }

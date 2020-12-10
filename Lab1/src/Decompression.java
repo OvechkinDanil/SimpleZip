@@ -1,4 +1,5 @@
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -6,6 +7,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class Decompression {
     private final String compressedFile;
@@ -13,24 +15,23 @@ public class Decompression {
     private boolean isNotFirstBlock = false;
     private final ArrayList<Short> dictionary;
     private final ArrayList<Byte> compressedBuffer;
-    private LogCreator log;
-    Decompression(ConfigParcer cfg, LogCreator l)
+    private Logger logger;
+
+    Decompression(ConfigParcer cfg, Logger logger)
     {
         compressedFile = cfg.GetConfigItemInf(ConfigParcer.ConfigItems.INPUT);
         output = cfg.GetConfigItemInf(ConfigParcer.ConfigItems.OUTPUT);
         dictionary = new ArrayList<>();
         compressedBuffer = new ArrayList<>();
-        log = l;
+        this.logger = logger;
     }
 
 
     public void deCompress()
     {
         int dictSize = 0, bufSize = 0, i = 0;
-        byte[] arrayForSize = new byte[4];
         byte first, second;
         try(FileOutputStream fileOutputStream = new FileOutputStream(output, true)) {
-
             try (FileInputStream fileInputStream = new FileInputStream(compressedFile)) {
 
                 while ((dictSize = fileInputStream.read()) != -1) {
@@ -52,9 +53,8 @@ public class Decompression {
         }
         catch (Exception e)
         {
-            log.writeToLog(LogCreator.LogItems.ERROR_OPEN_FILE);
+            logger.log(Level.SEVERE, Log.LoggerItems.CODE_FAILED_TO_READ.getTitle());
         }
-
     }
 
     private void OutputData(FileOutputStream fileOutputStream)
@@ -71,7 +71,7 @@ public class Decompression {
         }
         catch (IOException e)
         {
-            log.writeToLog(LogCreator.LogItems.ERROR_WITH_WRITING);
+            logger.log(Level.SEVERE, Log.LoggerItems.CODE_FAILED_TO_WRITE.getTitle());
         }
     }
 

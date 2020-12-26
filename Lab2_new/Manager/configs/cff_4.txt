@@ -1,9 +1,0 @@
-INPUT=in.txt
-OUTPUT=out.txt
-WRITER_NAME=ru.main.Writer
-WRITER_CONFIG=./configs/my_cfg/writerConfig.txt
-READER_NAME=ru.main.Reader
-READER_CONFIG=./configs/my_cfg/readerConfig.txt
-EXECUTORS_CONFIGS=./configs/my_cfg/executor_cfg.txt
-EXECUTORS_NAME=executor.Worker
-ORDER=ru.main.Reader-executor.Worker-ru.main.Writer

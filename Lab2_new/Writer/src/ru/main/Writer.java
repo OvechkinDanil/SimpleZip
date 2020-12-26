@@ -20,7 +20,7 @@ public class Writer implements IWriter {
     private Logger logger;
 
 
-    Writer(Logger logger)
+    public Writer(Logger logger)
     {
         this.logger = logger;
         grammar = new ReaderWriterGrammar();

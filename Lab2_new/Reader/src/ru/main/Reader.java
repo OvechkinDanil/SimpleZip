@@ -20,7 +20,7 @@ public class Reader implements IReader {
     private IExecutable producer;
     private Logger logger;
 
-    Reader(Logger logger)
+    public Reader(Logger logger)
     {
         this.logger = logger;
 

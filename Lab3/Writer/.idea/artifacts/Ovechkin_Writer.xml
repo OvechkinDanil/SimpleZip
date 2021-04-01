@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Ovechkin_Writer">
+    <output-path>$PROJECT_DIR$/out/artifacts/Ovechkin_Writer</output-path>
+    <root id="archive" name="Ovechkin_Writer.jar">
+      <element id="module-output" name="Writer" />
+    </root>
+  </artifact>
+</component>

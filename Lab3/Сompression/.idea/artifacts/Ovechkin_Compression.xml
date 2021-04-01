@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Ovechkin_Compression">
+    <output-path>$PROJECT_DIR$/out/artifacts/Ovechkin_Compression</output-path>
+    <root id="archive" name="Ovechkin_Compression.jar">
+      <element id="module-output" name="Сompression" />
+    </root>
+  </artifact>
+</component>
